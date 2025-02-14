@@ -3,7 +3,6 @@ import { useState } from "react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import SellTicketsDialog from "../components/SellTicketsDialog";
 import CopyButton from "@/app/components/copybutton/page";
 import { useRouter } from "next/navigation"; 

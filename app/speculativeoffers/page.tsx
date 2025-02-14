@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { API_URL, GAME_ID, SHIP_ID } from "@/app/traveller.config";
 import { DataTable } from "./datatable"
 import { columns } from "./columns"

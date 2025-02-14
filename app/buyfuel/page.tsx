@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Check, ChevronsUpDown } from "lucide-react"
 import { z } from "zod";
 import { API_URL, GAME_ID, SHIP_ID } from "@/app/traveller.config";
 
