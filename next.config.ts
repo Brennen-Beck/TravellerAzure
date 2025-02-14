@@ -1,9 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "standalone", // ⬅️ Reduce dependencies during deployment
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  images: {
+    // Your image domains or settings here (if applicable)
+  },
+  cache: {
+    enabled: true, // Enabling cache for the build
   },
 };
 
