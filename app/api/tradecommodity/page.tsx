@@ -71,8 +71,8 @@ const CargoHoldSchema = z.object({
   StandardTradeLot: z.number().nullable(),
 });
 
-export const CargobaySchema = z.array(CargoHoldSchema);
-type CargobayItem = z.infer<typeof CargobaySchema>;
+type CargobayItem = z.infer<typeof CargoHoldSchema>;
+
 
 export default function TradeCommodityPage() {
   const router = useRouter();
@@ -134,7 +134,7 @@ export default function TradeCommodityPage() {
 
     fetchShipData();
     fetchCargo();
-  }, []);
+  });
 
 
   useEffect(() => {
@@ -244,7 +244,7 @@ export default function TradeCommodityPage() {
         <CardContent className="flex flex-col p-4 gap-4">
           <div className="flex flex-row gap-12 ">
             <Label>Ship&apos;s Bank: {ShipsBank}Cr</Label>
-            <Label>Cargo Space Free: {ship?.CargoSpace ?? "Loading..."}</Label>
+            <Label>Cargo Space Free: {(ship?.CargoSpace - ship?.CargoSpaceFilled) ?? "Loading..."}</Label>
           </div>
           <div className="flex flex-row gap-10">
           <Label>ID: {offerId}</Label>

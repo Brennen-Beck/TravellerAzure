@@ -39,11 +39,11 @@ const CargoHoldSchema = z.object({
 });
 
 // Define API response schema (array of CargoHold entries)
-export const CargobaySchema = z.array(CargoHoldSchema);
+//export const CargobaySchema = z.array(CargoHoldSchema);
 
 // TypeScript type inferred from Zod schema
 //export type CargoHold = z.infer<typeof CargoHoldSchema>;
-export type CargobayItem = z.infer<typeof CargobaySchema>;
+export type CargobayItem = z.infer<typeof CargoHoldSchema>;
 
 
 
