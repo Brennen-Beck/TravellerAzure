@@ -5,8 +5,9 @@ import Image from "next/image";
 
 const contentOptions = [
   { type: "image", src: "/images/Free Pik Starport One.jpeg" },
-  { type: "image", src: "/images/Starship.jpg" },
+  { type: "video", src: "/videos/SpaceshipHallway.mp4" },
   { type: "image", src: "/images/Ship in Port.webp" },
+  { type: "image", src: "/images/Starship.jpg" },
   { type: "image", src: "/images/Spaceport.png" }
 ];
 
