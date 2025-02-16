@@ -1,8 +1,11 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { ArrowUpDown } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
+import { SpaceEncounter } from "./page";
 
+
+/*
 export type SpaceEncounter = {
   Encounter: string
   Rolled: number
@@ -15,6 +18,8 @@ export type SpaceEncounter = {
   LoggedTime: string
   combinedDateTime: string // Added combinedDateTime as a field
 }
+*/
+
 
 export const columns: ColumnDef<SpaceEncounter>[] = [
   {
@@ -50,7 +55,7 @@ export const columns: ColumnDef<SpaceEncounter>[] = [
     },
     cell: ({ row }) => {
       const rolledValue = row.getValue("Rolled")
-      return <div className="text-right">{rolledValue}</div>
+      return <div className="text-right">{rolledValue as React.ReactNode}</div>
     },
   },
   {
@@ -90,7 +95,7 @@ export const columns: ColumnDef<SpaceEncounter>[] = [
     },
     cell: ({ row }) => {
       const combinedDateTime = row.getValue("combinedDateTime"); // Access precomputed field
-      return <div className="text-right">{combinedDateTime}</div>; // Right-align the content
+      return <div className="text-right">{combinedDateTime as React.ReactNode}</div>; // Right-align the content
     },
 
   },

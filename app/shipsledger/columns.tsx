@@ -6,15 +6,15 @@ import { ArrowUpDown } from "lucide-react";
 
 export type LedgerEntry = {
   BankTransactionId: number;
-  day: number;
-  year: number;
-  time: string;
-  description: string;
-  runningTotal: number;
-  revenue: number;
-  expense: number;
-  starSystem: string;
-  uwp: string;
+  Day: number;
+  Year: number;
+  Time: string;
+  Description: string;
+  RunningTotal: number;
+  Revenue: number | null;
+  Expense: number | null;
+  StarSystem: string;
+  SystemUWP: string;
 };
 
 
@@ -36,24 +36,24 @@ export const columns: ColumnDef<LedgerEntry>[] = [
     },
   },
   {
-    accessorKey: "day",
+    accessorKey: "Day",
     header: ()=> <div className="text-right">Day</div>,
     cell: ({row}) => {
-      const DayOfTheYear = row.getValue("day");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(DayOfTheYear);
+      const DayOfTheYear = row.getValue("Day");
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof DayOfTheYear === "number" ? DayOfTheYear : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
   {
-    accessorKey: "year",
+    accessorKey: "Year",
     header: "Year",
   },
   {
-    accessorKey: "time",
+    accessorKey: "Time",
     header: "Time",
   },
   {
-    accessorKey: "description",
+    accessorKey: "Description",
     header: ({ column }) => {
       return (
         <div className="text-left">
@@ -69,7 +69,7 @@ export const columns: ColumnDef<LedgerEntry>[] = [
     },
   },
   {
-    accessorKey: "runningTotal",
+    accessorKey: "RunningTotal",
     header: ({ column }) => {
       return (
         <div className="text-right">
@@ -84,13 +84,13 @@ export const columns: ColumnDef<LedgerEntry>[] = [
       )
     },
     cell: ({row}) => {
-      const RunningTotal = row.getValue("runningTotal");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(RunningTotal);
+      const RunningTotal = row.getValue("RunningTotal");
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof RunningTotal === "number" ? RunningTotal : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
   {
-    accessorKey: "revenue",
+    accessorKey: "Revenue",
     header: ({ column }) => {
       return (
         <div className="text-right">
@@ -105,13 +105,13 @@ export const columns: ColumnDef<LedgerEntry>[] = [
       )
     },
     cell: ({row}) => {
-      const Revenue = row.getValue("revenue");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(Revenue);
+      const Revenue = row.getValue("Revenue");
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof Revenue === "number" ? Revenue : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
   {
-    accessorKey: "expense",
+    accessorKey: "Expense",
     header: ({ column }) => {
       return (
         <div className="text-right">
@@ -126,17 +126,17 @@ export const columns: ColumnDef<LedgerEntry>[] = [
       )
     },
     cell: ({row}) => {
-      const Expense = row.getValue("expense");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(Expense);
+      const Expense = row.getValue("Expense");
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof Expense === "number" ? Expense : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
   {
-    accessorKey: "starSystem",
+    accessorKey: "StarSystem",
     header: "Star System",
   },
   {
-    accessorKey: "uwp",
+    accessorKey: "SystemUWP",
     header: "UWP",
   },
 

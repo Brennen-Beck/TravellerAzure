@@ -20,7 +20,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -50,15 +49,15 @@ export function DataTable<TData, TValue>({
 
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({     
     BankTransactionId: false,
-    day: false,
-    year: false,
-    time: false,
-    description: true,
-    runningTotal: true,
-    revenue: true,
-    expense: true,
-    starSystem: true,
-    uwp: true,   
+    Day: false,
+    Year: false,
+    Time: false,
+    Description: true,
+    RunningTotal: true,
+    Revenue: true,
+    Expense: true,
+    StarSystem: true,
+    SystemUWP: true,   
 });
 
   const table = useReactTable({

@@ -38,7 +38,7 @@ export default function RefineFuelOnboardPage() {
                 router.push("/shipsstatus"); 
             } catch (error) {
                 console.error("Failed to refine fuel:", error);
-                alert(`Error: ${error.message}`);
+                alert(`Error: ${error}`);
             } finally {
                 setLoading(false);
             }

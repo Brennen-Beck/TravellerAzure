@@ -35,19 +35,19 @@ async function getData(): Promise<LedgerEntry[]> {
     }
 
     // Validate & Transform Data
-    return jsonData.Data.map((entry: any) => {
+    return jsonData.Data.map((entry: LedgerEntry) => {
       const validatedEntry = LedgerEntrySchema.parse(entry);
       return {
         BankTransactionId: validatedEntry.BankTransactionId,  // Renaming OfferId to id
-        day: validatedEntry.Day,
-        year: validatedEntry.Year,
-        time: validatedEntry.Time,
-        description: validatedEntry.Description,
-        runningTotal: validatedEntry.RunningTotal,
-        revenue: validatedEntry.Revenue,
-        expense: validatedEntry.Expense,
-        starSystem: validatedEntry.StarSystem,
-        uwp: validatedEntry.SystemUWP,
+        Day: validatedEntry.Day,
+        Year: validatedEntry.Year,
+        Time: validatedEntry.Time,
+        Description: validatedEntry.Description,
+        RunningTotal: validatedEntry.RunningTotal,
+        Revenue: validatedEntry.Revenue,
+        Expense: validatedEntry.Expense,
+        StarSystem: validatedEntry.StarSystem,
+        SystemUWP: validatedEntry.SystemUWP,
       };
     });
   } catch (error) {

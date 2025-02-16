@@ -9,8 +9,8 @@ export type CargoData ={
   CargoType: string,
   Description: string,
   dTons: number,
-  ValuePerTon: number,
-  StandardTradeLot: number,
+  ValuePerTon: number | null,
+  StandardTradeLot: number | null,
 };
 
 export const columns: ColumnDef<CargoData>[] = [
@@ -55,7 +55,7 @@ export const columns: ColumnDef<CargoData>[] = [
     },
     cell: ({row}) => {
       const TonnageAmount = row.getValue("dTons");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(TonnageAmount);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof TonnageAmount === "number" ? TonnageAmount : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -81,7 +81,7 @@ export const columns: ColumnDef<CargoData>[] = [
       }
       else
       {
-        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ValuePerTonAmount);
+        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof ValuePerTonAmount === "number" ? ValuePerTonAmount : 0);
         return <div className="text-right">{formatted}</div>
       }
     },
@@ -108,7 +108,7 @@ export const columns: ColumnDef<CargoData>[] = [
       }
       else
       {
-        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(StandardTradeLotAmount);
+        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof StandardTradeLotAmount === "number" ? StandardTradeLotAmount : 0);
         return <div className="text-right">{formatted}</div>
       }
     },

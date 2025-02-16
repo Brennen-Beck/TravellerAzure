@@ -14,7 +14,7 @@ interface SellTicketsDialogProps {
   open: boolean;
   onClose: () => void;
   ShipLevelData: ShipData | null;  // Accept ShipStatus as a prop
-  PassengerClassData: PassengerClass;
+  PassengerClassData: PassengerClass[];
 }
 
 
@@ -161,7 +161,7 @@ export default function SellTicketsDialog({ open, onClose, ShipLevelData, Passen
                 <div key={classType} className="grid grid-cols-5 gap-4 items-center border-t py-1">
                   <Label className="text-right pr-1">{classType}</Label>
                   <span className="text-center">{ShipLevelData?.[`${classType}Passengers` as keyof ShipData] ?? 0}</span>
-                  <span className="text-center">{getBerths(classType)}</span>
+                  <span className="text-center">{getBerths(classType as "Low" | "Basic" | "Middle" | "High" | "Luxury")}</span>
                   <span className="text-center">{getAvailablePassengers(classType)}</span> 
                   <Input
                     className="w-14"

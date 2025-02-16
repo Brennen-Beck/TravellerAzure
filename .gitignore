@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+.next/cache
+.next/server
 /.pnp
 .pnp.*
 .yarn/*

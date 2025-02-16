@@ -103,7 +103,7 @@ export default function PrepareForDeparturePage() {
             router.push("/shipsstatus"); // Change this to the correct page after departure
         } catch (error) {
             console.error("Failed to prepare for departure:", error);
-            alert(`Error: ${error.message}`);
+            alert(`Error: ${error}`);
         } finally {
             setLoading(false);
         }

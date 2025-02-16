@@ -14,7 +14,7 @@ export type PassengerClass = {
     Origin: string;
     Destination: string;
     OriginUWP: string;
-    DestinationUwp: string;
+    DestinationUWP: string;
     Day: number;
     Year: number;
     Time: string; // Representing TimeSpan as a string (e.g., "HH:mm:ss")
@@ -47,7 +47,7 @@ export type PassengerClass = {
           },
           cell: ({ getValue }) => {
             const TotalRevenue =getValue();
-            const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(TotalRevenue); 
+            const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof TotalRevenue === "number" ? TotalRevenue : 0); 
             return <div className="text-right">{formatted}</div>
           },
     },
@@ -68,7 +68,7 @@ export type PassengerClass = {
         },
         cell: ({ getValue }) => {
           const TicketPrice =getValue();
-          const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(TicketPrice); 
+          const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof TicketPrice === "number" ? TicketPrice : 0); 
           return <div className="text-right">{formatted}</div>
         },
     },
@@ -89,7 +89,7 @@ export type PassengerClass = {
       },
       cell: ({ getValue }) => {
         const ExpenseValue =getValue();
-        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ExpenseValue); 
+        const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof ExpenseValue === "number" ? ExpenseValue : 0); 
         return <div className="text-right">{formatted}</div>
       },
     },
@@ -110,7 +110,7 @@ export type PassengerClass = {
         },
         cell: ({ getValue }) => {
           const SoLExpenseValue =getValue();
-          const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(SoLExpenseValue); 
+          const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof SoLExpenseValue === "number" ? SoLExpenseValue : 0); 
           return <div className="text-right">{formatted}</div>
         },
     },

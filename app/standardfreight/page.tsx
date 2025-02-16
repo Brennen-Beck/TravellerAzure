@@ -84,7 +84,7 @@ export default function StandardFreightPage() {
   const router = useRouter();
   const [ship, setShip] = useState<ShipData | null>(null);
   const [freight, setFreight] = useState<StandardFreightLot[]>([]); // Initialize as an empty array
-  const ShipsBank = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ship?.ShipsBank);
+  const ShipsBank = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ship?.ShipsBank ?? 0);
   const [error, setError] = useState<string | null>(null);
   const [openFreightList, setOpenFreightList] = React.useState(false)
   const [selectedFreight, setSelectedFreight] = useState<StandardFreightLot | null>(null);

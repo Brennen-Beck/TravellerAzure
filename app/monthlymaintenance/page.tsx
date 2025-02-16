@@ -39,7 +39,7 @@ export default function MonthlyMaintenancePage() {
                 router.push("/shipsstatus"); 
             } catch (error) {
                 console.error("Failed to perform monthly maintenance:", error);
-                alert(`Error: ${error.message}`);
+                alert(`Error: ${error}`);
             } finally {
                 setLoading(false);
             }

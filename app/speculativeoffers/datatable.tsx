@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation"; 
 import CopyButton from "@/app/components/copybutton/page";
 import { API_URL, GAME_ID, SHIP_ID } from "@/app/traveller.config";
+import { ShipData } from "./page";
 
 
 import {
@@ -90,7 +91,7 @@ export function DataTable<TData, TValue>({
 
   
     const [searchType, setSearchType] = useState("option-standard"); // Default value
-    const FormattedShipsBank = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ShipStatus.ShipsBank);
+    const FormattedShipsBank = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(ShipStatus && typeof ShipStatus.ShipsBank === "number" ? ShipStatus.ShipsBank : 0);
   // Determine if the Online option should be disabled
   // Use useEffect to update isOnlineDisabled when the component mounts or when ShipStatus changes
   useEffect(() => {
@@ -173,9 +174,9 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-1">
         <div className="flex items-center justify-between gap-16">
           <h1 className="text-xl font-[orbitron] font-bold p-1">Speculative Offers</h1>
-          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">{ShipStatus.PreparingForDeparture ? "Buying Cargo" : "Selling Cargo"}</Label>
+          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">{ShipStatus && ShipStatus.PreparingForDeparture ? "Buying Cargo" : "Selling Cargo"}</Label>
           <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Ship&apos;s Bank: {FormattedShipsBank}Cr</Label>
-          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Offers Persued: { ShipStatus.PreparingForDeparture ? ShipStatus.BuyBrokerAttempts : ShipStatus.SellBrokerAttempts}</Label>
+          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Offers Persued: { ShipStatus && ShipStatus.PreparingForDeparture ? ShipStatus.BuyBrokerAttempts : ShipStatus?.SellBrokerAttempts}</Label>
         </div>
         {/* Column Selection Menu */}
         <DropdownMenu>

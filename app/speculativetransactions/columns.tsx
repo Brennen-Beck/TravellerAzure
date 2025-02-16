@@ -2,10 +2,10 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import { SpeculativeTransaction } from "./page";
 
 
-
-export const columns: ColumnDef<SpeculativeTransactionData>[] = [
+export const columns: ColumnDef<SpeculativeTransaction>[] = [
   {
     accessorKey: "SpeculativeTransactionId",
     header: ({ column }) => {
@@ -46,9 +46,12 @@ export const columns: ColumnDef<SpeculativeTransactionData>[] = [
       )
     },
     cell: ({row}) => {
-      const UnitValueAmount = row.getValue("UnitValue");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(UnitValueAmount);
-      return <div className="text-right">{formatted}</div>
+      const UnitValueAmount = row.getValue("UnitValue") as number | null;
+      let displayValue = "";
+      if (UnitValueAmount != null && !isNaN(UnitValueAmount)){
+        displayValue = new Intl.NumberFormat("en-US", { style: "decimal", maximumFractionDigits: 0 }).format(UnitValueAmount);
+      }
+      return <div className="text-right">{displayValue}</div>
     },
   },
   {
@@ -67,7 +70,7 @@ export const columns: ColumnDef<SpeculativeTransactionData>[] = [
       )
     },
     cell: ({row}) => {
-      const RevenueAmount = row.getValue("Revenue");
+      const RevenueAmount = row.getValue("Revenue") as number | null;
       if (RevenueAmount == null) {
         return <></>;
       }
@@ -94,7 +97,7 @@ export const columns: ColumnDef<SpeculativeTransactionData>[] = [
       )
     },
     cell: ({row}) => {
-      const ExpenseAmount = row.getValue("Expense");
+      const ExpenseAmount = row.getValue("Expense") as number | null;
       if (ExpenseAmount == null) {
         return <></>;
       }
@@ -113,7 +116,7 @@ export const columns: ColumnDef<SpeculativeTransactionData>[] = [
     accessorKey: "Day",
     header: ()=> <div className="text-right">Day</div>,
     cell: ({row}) => {
-      const DayOfTheYear = row.getValue("Day");
+      const DayOfTheYear = row.getValue("Day") as number;
       const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(DayOfTheYear);
       return <div className="text-right">{formatted}</div>
     },

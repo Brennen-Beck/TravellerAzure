@@ -7,6 +7,7 @@ import SellTicketsDialog from "../components/SellTicketsDialog";
 import CopyButton from "@/app/components/copybutton/page";
 import { useRouter } from "next/navigation"; 
 import { API_URL, GAME_ID, SHIP_ID } from "../traveller.config";
+import { ShipData, PassengerClass } from "./page";
 
 
 import {
@@ -34,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+//import { PassengerClass } from "./columns";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -121,7 +123,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {/* Dialog Component */}
-      <SellTicketsDialog open={sellDialogOpen} onClose={() => setSellDialogOpen(false)} PassengerClassData={data} ShipLevelData={ShipStatus}/>
+      <SellTicketsDialog open={sellDialogOpen} onClose={() => setSellDialogOpen(false)} PassengerClassData={data as PassengerClass[]} ShipLevelData={ShipStatus}/>
 
       <div className="flex items-center py-1">
         <div className="flex items-center justify-between gap-16">
@@ -214,7 +216,7 @@ export function DataTable<TData, TValue>({
               Sell Tickets
             </Button>
             {/* ShipStatus.DeclaredDestination should have a declared destination before you can Roll for Passengers and there's no point in rolling if you've already done so. */}
-            {ShipStatus.DeclaredDestination == null ? 
+            {ShipStatus?.DeclaredDestination == null ? 
             (
               <Button variant="outline" size="sm" onClick={() => router.push("/declaredestination")} disabled={false}> 
                 Declare Destination

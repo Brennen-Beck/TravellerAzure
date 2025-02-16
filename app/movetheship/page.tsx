@@ -100,7 +100,7 @@ export default function MoveTheShipPage() {
                 router.push("/shipsstatus"); 
             } catch (error) {
                 console.error("Failed to move the ship:", error);
-                alert(`Error: ${error.message}`);
+                alert(`Error: ${error}`);
             } finally {
                 setLoading(false);
             }

@@ -95,7 +95,7 @@ async function getData(): Promise<{OfferData: Offer[]; ShipStatusData: ShipData 
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const OfferJSON = await response.json();
-    console.log("Raw API Response:", OfferJSON); // Debugging
+    //console.log("Raw API Response:", OfferJSON); // Debugging
 
     if (!OfferJSON?.Data || !Array.isArray(OfferJSON.Data)) {
       console.error("Invalid API Response Structure:", OfferJSON);
@@ -103,7 +103,7 @@ async function getData(): Promise<{OfferData: Offer[]; ShipStatusData: ShipData 
     }
 
     // Validate & Transform Offer Data
-    const OfferData = OfferJSON.Data.map((entry: any) => {
+    const OfferData = (OfferJSON.Data as unknown as Offer[]).map((entry: Offer) => {
     try {
         return OfferSchema.parse(entry);
     } catch (error) {

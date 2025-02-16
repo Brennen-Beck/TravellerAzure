@@ -44,7 +44,7 @@ const SpeculativeTransactionSchema = z.object({
 
 
 // Type Definitions
-type SpeculativeTransaction = z.infer<typeof SpeculativeTransactionSchema>;
+export type SpeculativeTransaction = z.infer<typeof SpeculativeTransactionSchema>;
 
 
 
@@ -54,7 +54,7 @@ async function getData(): Promise<SpeculativeTransaction[]> {
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
   
       const jsonData = await response.json();
-      console.log("Raw API Response:", jsonData); // Debugging
+      //console.log("Raw API Response:", jsonData); // Debugging
   
       if (!jsonData?.Data || !Array.isArray(jsonData.Data)) {
         console.error("Invalid API Response Structure:", jsonData);

@@ -23,7 +23,7 @@ datatable.tsx file. At first glance, this code appears to be working out of the 
 ===========================================================================================================================*/
 
 // Zod Schema for API Response Validation
-export const SpaceEncounterSchema = z.object({
+const SpaceEncounterSchema = z.object({
   Encounter: z.string(),                     // Name of the encounter
   Rolled: z.number(),                        // Rolled value for encounter
   System: z.string(),                        // The system where the encounter took place
@@ -36,7 +36,7 @@ export const SpaceEncounterSchema = z.object({
 });
 
 // Define API response schema (array of SpaceEncounter entries)
-export const SpaceEncountersSchema = z.array(SpaceEncounterSchema);
+//export const SpaceEncountersSchema = z.array(SpaceEncounterSchema);
 
 // TypeScript type inferred from Zod schema
 export type SpaceEncounter = z.infer<typeof SpaceEncounterSchema>;
@@ -74,7 +74,7 @@ async function getData(): Promise<SpaceEncounter[]> {
     });
 
     // Sort the data by Year, Day, and Time to ensure chronological order
-    const sortedData = transformedData.sort((a, b) => {
+    const sortedData = transformedData.sort((a: SpaceEncounter, b: SpaceEncounter) => {
       if (a.EncounterYear !== b.EncounterYear) {
         return a.EncounterYear - b.EncounterYear; // Sort by year
       }

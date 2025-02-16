@@ -120,7 +120,7 @@ export default function ShipsStatusPage() {
               <ShipField label="Ship's Location" value={`${ship?.System}, (${ship?.SystemUWP})`} />
               <ShipField label="Destination" value={ship?.DeclaredDestination || "Unknown"} />
               <ShipField
-                cssInput={ship?.FuelOnboard<10 ? "bg-red-600" : ""}
+                cssInput={ship?.FuelOnboard && ship.FuelOnboard < 10 ? "bg-red-600" : ""} // Check if FuelOnboard is available and less than 10
                 label="Fuel Onboard"
                 value={`${ship?.FuelOnboard} of ${ship?.FuelCapacity} (${
                   ship?.RefinedFuel ? "Refined" : "Unrefined"
@@ -139,7 +139,7 @@ export default function ShipsStatusPage() {
             <CardContent className='m-0 px-2'>
               <ShipField label="Ship's Bank" value={`${ship?.ShipsBank?.toLocaleString()} Cr`} />
               <ShipField
-                cssInput={ship?.MaintenanceDue <0 ? "bg-red-600 text-yellow-300" : ""}
+                cssInput={ship?.MaintenanceDue && ship.MaintenanceDue < 0 ? "bg-red-600" : ""} 
                 label="Last Maintenance"
                 value={`${ship?.MaintenanceDay}, ${ship?.MaintenanceYear} (${
                   ship?.MaintenanceDue !== undefined
@@ -218,7 +218,7 @@ function ShipField({ label, value, cssInput }: { label: string; value: string | 
   return (
     <div className="flex flex-row items-center py-1 gap-2">
       <Label className="w-[33%] text-right">{label}</Label>
-      <Input disabled placeholder={value ?? ""} className={"flex-1 "+ cssInput ? cssInput : ""} />
+      <Input placeholder={String(value ?? "")} className={"flex-1 "+ cssInput ? cssInput : ""} />
     </div>
   );
 }

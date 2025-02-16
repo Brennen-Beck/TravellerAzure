@@ -61,7 +61,7 @@ export const columns: ColumnDef<Offer>[] = [
     },
     cell: ({row}) => {
       const Percentage = row.getValue("Percent");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(Percentage);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof Percentage === "number" ? Percentage : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -82,7 +82,7 @@ export const columns: ColumnDef<Offer>[] = [
     },
     cell: ({row}) => {
       const CommodityPrice = row.getValue("Price");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(CommodityPrice);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof CommodityPrice === "number" ? CommodityPrice : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Offer>[] = [
     },
     cell: ({row}) => {
       const BasePrice = row.getValue("BasePrice");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(BasePrice);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof BasePrice === "number" ? BasePrice : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -124,7 +124,7 @@ export const columns: ColumnDef<Offer>[] = [
     },
     cell: ({ getValue }) => {
       const tons =getValue();
-      const formatted = tons !=null ? new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(tons) : "N/A"; // Handle null values
+      const formatted = tons !=null ? new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof tons === "number" ? tons : 0) : "N/A"; // Handle null values
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -141,7 +141,7 @@ export const columns: ColumnDef<Offer>[] = [
     header: ()=> <div className="text-right">Day</div>,
     cell: ({row}) => {
       const DayOfTheYear = row.getValue("Day");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(DayOfTheYear);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof DayOfTheYear === "number" ? DayOfTheYear : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -174,7 +174,7 @@ export const columns: ColumnDef<Offer>[] = [
     },
     cell: ({row}) => {
       const AttemptNumber = row.getValue("Attempt");
-      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(AttemptNumber);
+      const formatted = new Intl.NumberFormat("en-US", {style: "decimal", maximumFractionDigits: 0,}).format(typeof AttemptNumber === "number" ? AttemptNumber : 0);
       return <div className="text-right">{formatted}</div>
     },
   },
@@ -194,21 +194,20 @@ export const columns: ColumnDef<Offer>[] = [
       )
     },
     cell: ({row}) => {
-        const TransactionType=row.getValue("OfferType");
-        const Commodity =row.getValue("TradeGood");
-        const IDOfOffer =row.getValue("OfferId");
+        const TransactionType=String(row.getValue("OfferType"));
+        const Commodity =String(row.getValue("TradeGood"));
+        const IDOfOffer =Number(row.getValue("OfferId"));
         const dTonsInOffer = Number(row.getValue("dTonsAvailable"));
-        const OfferPrice =row.getValue("Price");
+        const OfferPrice =Number(row.getValue("Price"));
         const router = useRouter();
         
         const handleNavigate = () => {
-          // ✅ Encode parameters to handle special characters
           const query = new URLSearchParams({
             Type: TransactionType,
             Good: Commodity,
-            OfferID: IDOfOffer,
-            OffersDTons: dTonsInOffer,
-            PriceOffered: OfferPrice,
+            OfferID: IDOfOffer.toString(),
+            OffersDTons: dTonsInOffer.toString(),
+            PriceOffered: OfferPrice.toString(),
           }).toString();
   
           router.push(`/api/tradecommodity?${query}`);

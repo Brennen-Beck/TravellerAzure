@@ -129,8 +129,10 @@ export default function BuyFuelPage() {
           alert(`Fuel purchase successful!\n`);
           router.push("/shipsstatus"); // Redirect after successful purchase
         } catch (error) {
+          setError(error instanceof Error ? error.message : "An unknown error occurred");
+
           console.error("Fuel purchase failed:", error);
-          alert(`Failed to purchase fuel: ${error.message}`);
+          alert(`Failed to purchase fuel: ${error}`);
         } finally {
           setLoading(false); // Remove loading state
         }

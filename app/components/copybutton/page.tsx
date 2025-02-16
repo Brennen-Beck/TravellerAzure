@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 
-const CopyCSVButton = ({ data }: { data: LedgerEntry[] }) => {
+const CopyCSVButton = (props: any) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
-    if (data.length === 0) return;
+    const data = props.data || [];
+    if (!Array.isArray(data) || data.length === 0) return;
 
-    const headers = Object.keys(data[0]).join(",");
+    // Convert all values to strings
+    const headers = Object.keys(data[0]).map(String).join(",");
     const rows = data.map(entry =>
-      Object.values(entry).map(value =>
-        typeof value === "string" ? `"${value}"` : value
-      ).join(",")
+      Object.values(entry).map(value => `"${String(value)}"`).join(",")
     );
 
     const csvString = [headers, ...rows].join("\n");
