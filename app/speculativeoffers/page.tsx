@@ -1,24 +1,12 @@
+"use client"; // Convert to a Client Component
+
+import { useState, useEffect } from "react";
 import { API_URL, GAME_ID, SHIP_ID } from "@/app/traveller.config";
-import { DataTable } from "./datatable"
-import { columns } from "./columns"
+import { DataTable } from "./datatable";
+import { columns } from "./columns";
 import { z } from "zod";
 
-/*=========================================================================================================================
-Speculative Offers
-Brennen Beck
-February 1, 2025
 
-Synopsis: The primary Trade window that supports buying and selling of commodities.
-
-Description: 
-  Most of the code for this is actually in the columns.tsx and datatable.tsx, not to mention the components/ui/table.tsx ShadCN
-component. In short, there's currently nothing on the page except a table which is a TanStack table.  
-
-Notes:
-  TanStack tables -   https://tanstack.com/table/latest
-  
-  Version 1.0 (2/1/2025) - Original code.
-===========================================================================================================================*/
 
 // Define Zod schema to match the API response
 const OfferSchema = z.object({
@@ -87,62 +75,49 @@ const ShipDataSchema = z.object({
 export type ShipData = z.infer<typeof ShipDataSchema>;
 
 
+export default function SpeculativeOffersPage() {
+  const [offerData, setOfferData] = useState<Offer[]>([]);
+  const [shipStatusData, setShipStatusData] = useState<ShipData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-async function getData(): Promise<{OfferData: Offer[]; ShipStatusData: ShipData | null}> {
-  
-  try {
-    const response = await fetch(`${API_URL}/SpeculativeOffers/${GAME_ID}/${SHIP_ID}`);
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+  // Fetch data on mount and when needed
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        // Fetch speculative offers
+        const offerResponse = await fetch(`${API_URL}/SpeculativeOffers/${GAME_ID}/${SHIP_ID}`, { cache: "no-store" });
+        if (!offerResponse.ok) throw new Error(`HTTP error! Status: ${offerResponse.status}`);
+        const offerJson = await offerResponse.json();
 
-    const OfferJSON = await response.json();
-    //console.log("Raw API Response:", OfferJSON); // Debugging
+        // Validate & transform Offer Data
+        const offers = offerJson.Data?.map((entry: any) => OfferSchema.parse(entry)) || [];
+        setOfferData(offers);
 
-    if (!OfferJSON?.Data || !Array.isArray(OfferJSON.Data)) {
-      console.error("Invalid API Response Structure:", OfferJSON);
-      return {OfferData: [], ShipStatusData: null};
+        // Fetch ship data
+        const shipResponse = await fetch(`${API_URL}/ShipData/${GAME_ID}/${SHIP_ID}`, { cache: "no-store" });
+        if (!shipResponse.ok) throw new Error(`HTTP error! Status: ${shipResponse.status}`);
+        const shipJson = await shipResponse.json();
+
+        const shipData = shipJson.Data?.length ? ShipDataSchema.parse(shipJson.Data[0]) : null;
+        setShipStatusData(shipData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
     }
 
-    // Validate & Transform Offer Data
-    const OfferData = (OfferJSON.Data as unknown as Offer[]).map((entry: Offer) => {
-    try {
-        return OfferSchema.parse(entry);
-    } catch (error) {
-        console.error("Invalid Offer Data:", entry, error);
-        return null; // Filter out invalid entries
-    }
-    }).filter((entry): entry is Offer => entry !== null); // Remove null entries
+    fetchData();
+  }, []); // Runs only once on component mount
 
-    // Fetch Ship Data
-    let ShipStatusData: ShipData | null = null;
-    try {
-        const ShipResponse = await fetch(`${API_URL}/ShipData/${GAME_ID}/${SHIP_ID}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${ShipResponse.status}`);
-
-        const ShipJSON = await ShipResponse.json();
-        ShipStatusData = ShipJSON?.Data?.length ? ShipDataSchema.parse(ShipJSON.Data[0]) : null;
-    } catch (err) {
-      console.error("Error fetching ship data:", err);
-    }
-  return {OfferData, ShipStatusData};
-  } catch (error) {
-    console.error("Error fetching speculative offers:", error);
-    return {OfferData: [], ShipStatusData: null};
-  }
-}
- 
-
-export default async function SpeculativeOffersPage() {
-  const {OfferData, ShipStatusData} = await getData();
-
-
-return (
-    <>
-    <section className='flex flex-col font-[roboto] m-2.5'> 
+  return (
+    <section className="flex flex-col font-[roboto] m-2.5">
       <div className="container mx-auto p-0">
-        <DataTable columns={columns} data={OfferData} ShipStatus={ShipStatusData}/>
+        {loading ? <p>Loading offers...</p> : <DataTable columns={columns} data={offerData} ShipStatus={shipStatusData} />}
+        {error && <p className="text-red-500">Error: {error}</p>}
       </div>
-      <h1>{}</h1>
     </section>
-    </>
   );
 }
