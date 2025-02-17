@@ -176,7 +176,7 @@ export function DataTable<TData, TValue>({
           <h1 className="text-xl font-[orbitron] font-bold p-1">Speculative Offers</h1>
           <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">{ShipStatus && ShipStatus.PreparingForDeparture ? "Buying Cargo" : "Selling Cargo"}</Label>
           <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Ship&apos;s Bank: {FormattedShipsBank}Cr</Label>
-          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Offers Persued: { ShipStatus && ShipStatus.PreparingForDeparture ? ShipStatus.BuyBrokerAttempts : ShipStatus.SellBrokerAttempts}</Label>
+          <Label className="whitespace-nowrap font-[orbitron] font-light pt-1">Offers Persued: { ShipStatus && ShipStatus.PreparingForDeparture ? ShipStatus.BuyBrokerAttempts : ShipStatus?.SellBrokerAttempts}</Label>
         </div>
         {/* Column Selection Menu */}
         <DropdownMenu>
